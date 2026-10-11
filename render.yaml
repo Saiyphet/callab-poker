@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: collab-poker
+    name: collab-table
     runtime: node
     region: singapore
     plan: free
