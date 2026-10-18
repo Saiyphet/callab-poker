@@ -19,14 +19,16 @@ function makePin(pin: string): StoredPin {
 }
 
 export async function initAuth() {
+  const envPin = (process.env.DEALER_PIN || "245678").trim();
   const loaded = await loadDoc<StoredPin>("dealer-pin");
-  if (loaded?.salt && loaded?.hash) {
+  // RESET_DEALER_PIN=true forces the PIN back to DEALER_PIN on startup
+  if (process.env.RESET_DEALER_PIN !== "true" && loaded?.salt && loaded?.hash) {
     stored = loaded;
     return;
   }
-  // First start: create the dealer PIN from DEALER_PIN (or the old default).
-  stored = makePin(process.env.DEALER_PIN || "245678");
+  stored = makePin(envPin);
   saveDoc("dealer-pin", stored);
+  console.log(`Dealer PIN reset from DEALER_PIN (${envPin.length} digits)`);
 }
 
 function pinMatches(pin: string) {
@@ -56,7 +58,7 @@ export function tokenFrom(req: Request) {
 }
 
 export function login(pin: unknown) {
-  if (typeof pin !== "string" || !pinMatches(pin)) throw new HttpError(401, "ລະຫັດດີເລີບໍ່ຖືກ");
+  if (typeof pin !== "string" || !pinMatches(pin.trim())) throw new HttpError(401, "ລະຫັດດີເລີບໍ່ຖືກ");
   const payload = `${Date.now() + TOKEN_TTL_MS}.${randomBytes(8).toString("hex")}`;
   return `${payload}.${sign(payload)}`;
 }
@@ -66,11 +68,11 @@ export function logout(token: string) {
 }
 
 export function changePin(currentPin: unknown, nextPin: unknown) {
-  if (typeof currentPin !== "string" || !pinMatches(currentPin)) throw new HttpError(400, "ລະຫັດເກົ່າບໍ່ຖືກ");
-  if (typeof nextPin !== "string" || !/^\d{4,8}$/.test(nextPin)) {
+  if (typeof currentPin !== "string" || !pinMatches(currentPin.trim())) throw new HttpError(400, "ລະຫັດເກົ່າບໍ່ຖືກ");
+  if (typeof nextPin !== "string" || !/^\d{4,8}$/.test(nextPin.trim())) {
     throw new HttpError(400, "ລະຫັດໃໝ່ຕ້ອງເປັນຕົວເລກ 4 ຫາ 8 ໂຕ");
   }
-  stored = makePin(nextPin);
+  stored = makePin(nextPin.trim());
   saveDoc("dealer-pin", stored);
 }
 
