@@ -132,13 +132,23 @@ function publicPlayer(player: { playerNumber: string; name: string; seat: number
 }
 
 const clientDist = path.join(path.dirname(fileURLToPath(import.meta.url)), "..", "..", "client", "dist");
+const noCacheFiles = new Set(["sw.js", "manifest.webmanifest", "index.html"]);
 if (fs.existsSync(clientDist)) {
-  app.use(express.static(clientDist));
+  app.use(
+    express.static(clientDist, {
+      setHeaders(res, filePath) {
+        if (noCacheFiles.has(path.basename(filePath))) {
+          res.setHeader("Cache-Control", "no-cache");
+        }
+      },
+    }),
+  );
   app.use((req, res, next) => {
     if (req.method !== "GET" || req.path.startsWith("/api")) {
       next();
       return;
     }
+    res.setHeader("Cache-Control", "no-cache");
     res.sendFile(path.join(clientDist, "index.html"));
   });
 }

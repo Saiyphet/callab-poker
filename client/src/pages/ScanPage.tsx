@@ -5,6 +5,7 @@ import { createChipRequest, getChipRequest, getPlayer } from "../api";
 import { BUYIN_PRESETS, formatChips, parsePlayerCode } from "../chips";
 import { nameColor } from "../nameColor";
 import { ChipToken } from "../components/ChipToken";
+import { InstallAppButton } from "../components/InstallAppButton";
 import type { ChipRequest } from "../types";
 
 type Phase = "scan" | "form" | "done";
@@ -274,6 +275,7 @@ export function ScanPage() {
           </div>
         </div>
       )}
+      <InstallAppButton />
     </section>
   );
 }

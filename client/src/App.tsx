@@ -2,6 +2,7 @@ import { useEffect, useState, type FormEvent } from "react";
 import { Link, Navigate, NavLink, Route, Routes, useLocation } from "react-router-dom";
 import { changeDealerPin, loginDealer, logoutDealer } from "./api";
 import { clearDealerToken, dealerToken, setDealerToken } from "./dealerAuth";
+import { InstallAppButton } from "./components/InstallAppButton";
 import { CardsPage } from "./pages/CardsPage";
 import { DealerPage } from "./pages/DealerPage";
 import { ReportPage } from "./pages/ReportPage";
@@ -124,6 +125,7 @@ function LoginPage({ onSuccess }: { onSuccess: () => void }) {
       <Link className="dealer-entry" to="/scan">
         ກັບໄປໜ້າສະແກນຂໍຊິບ
       </Link>
+      <InstallAppButton />
     </form>
   );
 }

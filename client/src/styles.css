@@ -180,6 +180,20 @@ main { padding: 24px; max-width: 1280px; margin: 0 auto; }
   font-weight: 700;
 }
 .btn.ghost { color: var(--brass); }
+.install-app {
+  width: min(100%, 460px);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.install-hint {
+  margin: 0;
+  max-width: 460px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.5;
+}
 .file-btn { width: fit-content; }
 .file-btn input { display: none; }
 .btn:disabled { opacity: 0.55; cursor: wait; }
