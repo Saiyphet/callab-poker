@@ -335,7 +335,7 @@ function SettleMath({ buyIn, chipsInHand, profit }: { buyIn: number; chipsInHand
   return (
     <div className="settle-math">
       <p>ຊື້ເຂົ້າ {formatChips(buyIn)}</p>
-      <p>ມີຢູ່ {formatChips(chipsInHand)}</p>
+      <p>ຖອນອອກ {formatChips(chipsInHand)}</p>
       <p className={profitClass(profit)}>
         {resultWord(profit)} {formatChips(Math.abs(profit))}
       </p>

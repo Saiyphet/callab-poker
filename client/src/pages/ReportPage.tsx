@@ -120,7 +120,7 @@ export function ReportPage() {
                       <b className="win">ກຳລັງຫຼິ້ນ</b>
                     ) : (
                       <>
-                        <p>ມີຢູ່ {formatChips(entry.chipsInHand ?? 0)}</p>
+                        <p>ຖອນອອກ {formatChips(entry.chipsInHand ?? 0)}</p>
                         <b className={profit !== null && profit > 0 ? "win" : profit !== null && profit < 0 ? "loss" : ""}>
                           {resultWord(profit ?? 0)} {formatChips(Math.abs(profit ?? 0))}
                         </b>
@@ -163,7 +163,7 @@ export function ReportPage() {
                       </span>
                     </div>
                     <p>ຊື້ເຂົ້າ {formatChips(entry.buyIn ?? 0)}</p>
-                    <p>ມີຢູ່ {formatChips(entry.chipsInHand ?? entry.amount)}</p>
+                    <p>ຖອນອອກ {formatChips(entry.chipsInHand ?? entry.amount)}</p>
                     <b className={profit > 0 ? "win" : profit < 0 ? "loss" : ""}>
                       {resultWord(profit)} {formatChips(Math.abs(profit))}
                     </b>
